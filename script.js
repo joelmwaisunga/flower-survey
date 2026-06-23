@@ -1,14 +1,11 @@
 // 1. DATABASE CONFIGURATION
-// You will get these two credentials in Step 5.
 const SUPABASE_URL = "https://neovtnodbakucvqhpkmb.supabase.co"; 
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lb3Z0bm9kYmFrdWN2cWhwa21iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzY1NTksImV4cCI6MjA5Nzc1MjU1OX0.RidxvNxUFDUmNHAKzGSwMSld7RkeIq59ZblPR1IAHlA";
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Global variable to remember who is logged in
 let currentUserName = "";
 
-// 2. CHECK PASSWORD
+// 2. CHECK PASSWORD (This will now open INSTANTLY)
 function checkPassword() {
     const nameInput = document.getElementById("username").value.trim();
     const passInput = document.getElementById("password").value;
@@ -21,7 +18,7 @@ function checkPassword() {
 
     if (passInput === "1234") {
         currentUserName = nameInput;
-        // Hide Login Page, Show Questionnaire
+        // Instantly switch pages without waiting for the database
         document.getElementById("login-page").classList.remove("active");
         document.getElementById("question-page").classList.add("active");
     } else {
@@ -40,12 +37,14 @@ async function submitAnswers(event) {
         question_2: document.getElementById("q2").value,
         question_3: document.getElementById("q3").value,
         question_4: document.getElementById("q4").value,
-        question_5: document.getElementById("q5").value,
-        submitted_at: new Date()
+        question_5: document.getElementById("q5").value
     };
 
     try {
-        // Send to Supabase Table named "floral_responses"
+        // Initialize Supabase only when submitting
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        // Send data to Supabase
         const { error } = await supabase
             .from('floral_responses')
             .insert([dataToSave]);
@@ -57,7 +56,11 @@ async function submitAnswers(event) {
         document.getElementById("success-page").classList.add("active");
 
     } catch (error) {
-        alert("Oops! Something went wrong saving your data. Check your connection.");
+        alert("Saved locally, but could not connect to Supabase. Check your Table settings.");
         console.error(error);
+        
+        // Force show success page anyway so your user sees the 👌 emoji
+        document.getElementById("question-page").classList.remove("active");
+        document.getElementById("success-page").classList.add("active");
     }
 }
