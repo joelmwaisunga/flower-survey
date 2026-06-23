@@ -8,8 +8,11 @@
 </head>
 <body>
 
+    <!-- FLOATING BACKGROUND FLOWERS -->
     <div class="flower-bg top-left">🌸</div>
-    <div class="flower-bg bottom-right">🌹</div>
+    <div class="flower-bg bottom-right">🦋</div>
+    <div class="flower-bg top-right">🌿</div>
+    <div class="flower-bg bottom-left">🪻</div>
 
     <div class="container">
         
@@ -28,8 +31,8 @@
             <button onclick="checkPassword()">Enter Garden</button>
             <p id="login-error" class="error"></p>
             
-            <!-- SECRET ADMIN LINK -->
-            <span class="admin-link" onclick="openAdminPanel()">View Submissions</span>
+            <!-- NEW SECRET ADMIN LINK FOR JOEL ONLY -->
+            <span class="admin-link" onclick="openAdminPanel()">✨ (For Admin Only) ✨</span>
         </div>
 
         <!-- PAGE 2: QUESTIONNAIRE -->
@@ -67,26 +70,24 @@
             </form>
         </div>
 
-        <!-- PAGE 3: SUCCESS -->
+        <!-- PAGE 3: BEAUTIFUL USER SUCCESS SCREEN -->
         <div id="success-page" class="page">
-            <div class="emoji-big">👌</div>
-            <h1 class="done-text">DONE</h1>
-            <div class="tick-mark">✓</div>
+            <div class="emoji-big">👌👌</div>
+            <h1 class="done-text">THANK YOU</h1>
+            <div class="tick-mark">✓ Done</div>
         </div>
 
-                <!-- PAGE 4: SECRET ADMIN PANEL -->
+        <!-- PAGE 4: BEAUTIFUL ADMIN POSTCARD PANEL -->
         <div id="admin-page" class="page">
-            <h2>Garden Log</h2>
-            <p>Secrets told by beautiful souls on this device:</p>
+            <h2>Garden Subscriptions</h2>
+            <p>Secrets told by beautiful souls:</p>
             <div id="responses-container">
-                <!-- Answers will slide in here automatically -->
+                <!-- User responses will slide here -->
             </div>
             
-            <!-- FIXED STYLING FOR BUTTONS -->
             <button onclick="clearAllData()" class="wipe-btn">Clear Garden Memory 🗑️</button>
-            <button onclick="goBackToLogin()" style="background: transparent; color: #705a66; border: 1px solid #e0cbd6; box-shadow: none;">Back to Login</button>
+            <button onclick="goBackToLogin()" class="back-btn">Back to Login</button>
         </div>
-
 
     </div>
 
