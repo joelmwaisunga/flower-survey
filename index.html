@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- BACKGROUND FLORAL OVERLAYS -->
     <div class="flower-bg top-left">🌸</div>
     <div class="flower-bg bottom-right">🌹</div>
 
@@ -28,6 +27,9 @@
             </div>
             <button onclick="checkPassword()">Enter Garden</button>
             <p id="login-error" class="error"></p>
+            
+            <!-- SECRET ADMIN LINK -->
+            <span class="admin-link" onclick="openAdminPanel()">View Submissions</span>
         </div>
 
         <!-- PAGE 2: QUESTIONNAIRE -->
@@ -72,13 +74,18 @@
             <div class="tick-mark">✓</div>
         </div>
 
+        <!-- PAGE 4: SECRET ADMIN PANEL -->
+        <div id="admin-page" class="page">
+            <h2>Admin Dashboard</h2>
+            <p>All recorded entries on this device:</p>
+            <div id="responses-container">
+                <!-- Answers will slide in here automatically -->
+            </div>
+            <button onclick="goBackToLogin()" style="background: #ccc; color: #333; box-shadow: none;">Back to Login</button>
+        </div>
+
     </div>
 
-            <!-- REMOVED THE SUPABASE LINK SO IT NEVER TIMES OUT Again -->
     <script src="script.js"></script>
-</body>
-
-</body>
-
 </body>
 </html>
