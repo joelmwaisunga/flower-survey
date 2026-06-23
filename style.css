@@ -1,75 +1,241 @@
-/* ELEGANT FLORAL ADMIN DESIGNS */
-#responses-container {
-    max-height: 400px;
-    overflow-y: auto;
-    padding-right: 10px;
-    margin-bottom: 20px;
+@import url('https://googleapis.com');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/* Custom scrollbar to keep it looking pretty */
-#responses-container::-webkit-scrollbar {
-    width: 6px;
-}
-#responses-container::-webkit-scrollbar-thumb {
-    background-color: #ffd1d8;
-    border-radius: 10px;
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Beautiful smooth transition between Pink and Sky Blue */
+    background: linear-gradient(135deg, #fff0f5 0%, #e6f2ff 50%, #ffe4e1 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+    position: relative;
 }
 
-/* The Postcard Box */
-.response-card {
-    background: rgba(255, 255, 255, 0.6);
-    border: 1px solid rgba(255, 182, 193, 0.4);
-    border-radius: 18px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* Floating Flower Background elements */
+.flower-bg {
+    position: absolute;
+    font-size: 6rem;
+    opacity: 0.25;
+    pointer-events: none;
+    user-select: none;
+}
+.top-left { top: 5%; left: 5%; animation: float 7s ease-in-out infinite; }
+.bottom-right { bottom: 5%; right: 5%; animation: float 6s ease-in-out infinite alternate; }
+.top-right { top: 8%; right: 6%; animation: float 8s ease-in-out infinite; }
+.bottom-left { bottom: 8%; left: 6%; animation: float 5s ease-in-out infinite alternate; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(10deg); }
+}
+
+/* Elegant Soft Blur Container */
+.container {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(15px);
+    padding: 2.5rem;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(173, 216, 230, 0.4), 0 5px 15px rgba(255, 182, 193, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    width: 100%;
+    max-width: 550px;
+    margin: 20px;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+
+/* Slide Page Control */
+.page {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+h2 {
+    font-family: 'Playfair Display', serif;
+    color: #3a4f66;
+    margin-bottom: 0.5rem;
+    font-size: 1.9rem;
+}
+
+p {
+    color: #6a7b8c;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Input Fields */
+.input-group {
+    margin-bottom: 1.3rem;
     text-align: left;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 4px 15px rgba(255, 182, 193, 0.1);
-    animation: fadeIn 0.4s ease-in-out;
 }
 
-/* The Person's Name Heading */
+label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: #4a5d6e;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #cce2ff;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background: rgba(255, 255, 255, 0.9);
+    color: #2c3e50;
+    transition: all 0.3s;
+}
+
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #ffb6c1;
+    box-shadow: 0 0 10px rgba(255, 182, 193, 0.6);
+}
+
+/* Main Buttons styling (Blends Pink & Blue) */
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ffb6c1 0%, #b0c4de 100%);
+    border: none;
+    border-radius: 14px;
+    color: #4a3b4e;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255, 182, 193, 0.4);
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(176, 196, 222, 0.7);
+}
+
+.error {
+    color: #d9534f;
+    font-size: 0.85rem;
+    margin-top: 10px;
+}
+
+/* Hidden Secret Admin Trigger Link */
+.admin-link {
+    display: block;
+    margin-top: 25px;
+    font-size: 0.8rem;
+    color: #a3b8cc;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+.admin-link:hover {
+    color: #ffb6c1;
+}
+
+/* User Finished Screen Design */
+.emoji-big {
+    font-size: 5.5rem;
+    margin-bottom: 10px;
+    animation: bounce 0.6s ease-out;
+}
+@keyframes bounce {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.done-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    color: #ff8fa3;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+.tick-mark {
+    font-size: 1.3rem;
+    color: #66bb6a;
+    font-weight: 500;
+    background: rgba(102, 187, 106, 0.15);
+    padding: 6px 16px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* Beautiful Admin View Dashboard Layout */
+#responses-container {
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 15px;
+}
+#responses-container::-webkit-scrollbar { width: 5px; }
+#responses-container::-webkit-scrollbar-thumb { background: #ffccd5; border-radius: 10px; }
+
+.response-card {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(204, 226, 255, 0.5);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 15px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+
 .response-card h3 {
     font-family: 'Playfair Display', serif;
-    color: #4a2c40;
-    font-size: 1.4rem;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #fecfef;
-    padding-bottom: 5px;
-    display: flex;
-    align-items: center;
-}
-
-.response-card h3::before {
-    content: "🌸 ";
-    font-size: 1.1rem;
-    margin-right: 8px;
-}
-
-/* Individual Question Layouts */
-.response-item {
-    font-size: 0.9rem;
+    color: #4682b4;
+    font-size: 1.3rem;
     margin-bottom: 12px;
-    line-height: 1.5;
-    color: #33222b;
+    border-bottom: 1px dashed #ffb6c1;
+    padding-bottom: 4px;
+}
+
+.response-item {
+    font-size: 0.88rem;
+    margin-bottom: 10px;
+    color: #2c3e50;
+    line-height: 1.4;
 }
 
 .response-item strong {
-    color: #705a66;
+    color: #7b8e9e;
     font-family: 'Playfair Display', serif;
     font-style: italic;
-    font-size: 0.95rem;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 1px;
 }
 
-/* Wipe Button styled like a delicate dried rose */
+/* Admin Dashboard control buttons */
 .wipe-btn {
-    background: linear-gradient(135deg, #fbc5d8 0%, #ffccd5 100%) !important;
+    background: linear-gradient(135deg, #ffccd5 0%, #ffb6c1 100%) !important;
     color: #5c4452 !important;
-    font-weight: 500 !important;
-    box-shadow: 0 4px 10px rgba(251, 197, 216, 0.4) !important;
+    margin-bottom: 8px;
 }
-.wipe-btn:hover {
-    box-shadow: 0 6px 15px rgba(251, 197, 216, 0.7) !important;
+.back-btn {
+    background: transparent !important;
+    color: #7b8e9e !important;
+    border: 1px solid #cce2ff !important;
+    box-shadow: none !important;
 }
