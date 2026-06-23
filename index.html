@@ -74,15 +74,19 @@
             <div class="tick-mark">✓</div>
         </div>
 
-        <!-- PAGE 4: SECRET ADMIN PANEL -->
+                <!-- PAGE 4: SECRET ADMIN PANEL -->
         <div id="admin-page" class="page">
-            <h2>Admin Dashboard</h2>
-            <p>All recorded entries on this device:</p>
+            <h2>Garden Log</h2>
+            <p>Secrets told by beautiful souls on this device:</p>
             <div id="responses-container">
                 <!-- Answers will slide in here automatically -->
             </div>
-            <button onclick="goBackToLogin()" style="background: #ccc; color: #333; box-shadow: none;">Back to Login</button>
+            
+            <!-- FIXED STYLING FOR BUTTONS -->
+            <button onclick="clearAllData()" class="wipe-btn">Clear Garden Memory 🗑️</button>
+            <button onclick="goBackToLogin()" style="background: transparent; color: #705a66; border: 1px solid #e0cbd6; box-shadow: none;">Back to Login</button>
         </div>
+
 
     </div>
 
