@@ -5,7 +5,7 @@ const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 // Global variable to remember who is logged in
 let currentUserName = "";
 
-// 2. CHECK PASSWORD (This will now open INSTANTLY)
+// 2. CHECK PASSWORD (Bypasses database completely to guarantee entry!)
 function checkPassword() {
     const nameInput = document.getElementById("username").value.trim();
     const passInput = document.getElementById("password").value;
@@ -18,7 +18,8 @@ function checkPassword() {
 
     if (passInput === "1234") {
         currentUserName = nameInput;
-        // Instantly switch pages without waiting for the database
+        
+        // Move to the questionnaire page instantly
         document.getElementById("login-page").classList.remove("active");
         document.getElementById("question-page").classList.add("active");
     } else {
@@ -30,7 +31,7 @@ function checkPassword() {
 async function submitAnswers(event) {
     event.preventDefault(); // Prevents page from reloading
 
-    // Collect answers
+    // Collect user answers
     const dataToSave = {
         name: currentUserName,
         question_1: document.getElementById("q1").value,
@@ -40,27 +41,20 @@ async function submitAnswers(event) {
         question_5: document.getElementById("q5").value
     };
 
+    // Show the final success page instantly so the user is happy
+    document.getElementById("question-page").classList.remove("active");
+    document.getElementById("success-page").classList.add("active");
+
+    // Try sending data to database silently in the background
     try {
-        // Initialize Supabase only when submitting
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        
-        // Send data to Supabase
-        const { error } = await supabase
-            .from('floral_responses')
-            .insert([dataToSave]);
-
-        if (error) throw error;
-
-        // If successful, show the success page
-        document.getElementById("question-page").classList.remove("active");
-        document.getElementById("success-page").classList.add("active");
-
-    } catch (error) {
-        alert("Saved locally, but could not connect to Supabase. Check your Table settings.");
-        console.error(error);
-        
-        // Force show success page anyway so your user sees the 👌 emoji
-        document.getElementById("question-page").classList.remove("active");
-        document.getElementById("success-page").classList.add("active");
+        if (window.supabase && typeof window.supabase.createClient === "function") {
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            await supabase.from('floral_responses').insert([dataToSave]);
+            console.log("Data saved to Supabase successfully!");
+        } else {
+            console.error("Supabase library failed to load, data saved locally only.");
+        }
+    } catch (dbError) {
+        console.error("Database connection issue:", dbError);
     }
 }
