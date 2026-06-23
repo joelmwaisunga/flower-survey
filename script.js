@@ -1,7 +1,7 @@
 // 1. DATABASE CONFIGURATION
 // You will get these two credentials in Step 5.
 const SUPABASE_URL = "https://neovtnodbakucvqhpkmb.supabase.co"; 
-const SUPABASE_KEY = "sb_publishable_RoanbZtIgScLeJPBjtXJEw_5qUOVniy";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lb3Z0bm9kYmFrdWN2cWhwa21iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzY1NTksImV4cCI6MjA5Nzc1MjU1OX0.RidxvNxUFDUmNHAKzGSwMSld7RkeIq59ZblPR1IAHlA";
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
