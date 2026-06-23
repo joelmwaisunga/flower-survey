@@ -1,11 +1,7 @@
-// 1. DATABASE CONFIGURATION
-const SUPABASE_URL = "https://neovtnodbakucvqhpkmb.supabase.co"; 
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5lb3Z0bm9kYmFrdWN2cWhwa21iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIxNzY1NTksImV4cCI6MjA5Nzc1MjU1OX0.RidxvNxUFDUmNHAKzGSwMSld7RkeIq59ZblPR1IAHlA";
-
 // Global variable to remember who is logged in
 let currentUserName = "";
 
-// 2. CHECK PASSWORD (Bypasses database completely to guarantee entry!)
+// 1. CHECK PASSWORD (Works instantly, no internet required)
 function checkPassword() {
     const nameInput = document.getElementById("username").value.trim();
     const passInput = document.getElementById("password").value;
@@ -27,8 +23,8 @@ function checkPassword() {
     }
 }
 
-// 3. SUBMIT ANSWERS TO DATABASE
-async function submitAnswers(event) {
+// 2. SUBMIT ANSWERS (Saves data locally inside the computer browser)
+function submitAnswers(event) {
     event.preventDefault(); // Prevents page from reloading
 
     // Collect user answers
@@ -38,23 +34,20 @@ async function submitAnswers(event) {
         question_2: document.getElementById("q2").value,
         question_3: document.getElementById("q3").value,
         question_4: document.getElementById("q4").value,
-        question_5: document.getElementById("q5").value
+        question_5: document.getElementById("q5").value,
+        submitted_at: new Date().toLocaleString()
     };
 
-    // Show the final success page instantly so the user is happy
+    // Fetch existing responses or create an empty array if none exist
+    let allResponses = JSON.parse(localStorage.getItem("floral_responses")) || [];
+    
+    // Add the new submission to our list
+    allResponses.push(dataToSave);
+    
+    // Save it securely back into the browser's storage
+    localStorage.setItem("floral_responses", JSON.stringify(allResponses));
+
+    // Show the final success page with the 👌 emoji instantly
     document.getElementById("question-page").classList.remove("active");
     document.getElementById("success-page").classList.add("active");
-
-    // Try sending data to database silently in the background
-    try {
-        if (window.supabase && typeof window.supabase.createClient === "function") {
-            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-            await supabase.from('floral_responses').insert([dataToSave]);
-            console.log("Data saved to Supabase successfully!");
-        } else {
-            console.error("Supabase library failed to load, data saved locally only.");
-        }
-    } catch (dbError) {
-        console.error("Database connection issue:", dbError);
-    }
 }
